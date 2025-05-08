@@ -1,122 +1,102 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
-import 'package:flutter/material.dart';
-
-void main() => runApp(NeedsMetApp());
-
-class NeedsMetApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'NeedsMet',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomeScreen(),
-        '/details': (context) => DetailsScreen(),
-      },
-    );
-  }
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/details" element={<DetailsScreen />} />
+      </Routes>
+    </Router>
+  );
 }
 
-// ---------------- HomeScreen ----------------
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        leading: IconButton(
-          icon: Icon(Icons.notifications, color: Colors.black),
-          onPressed: () {},
-        ),
-        title: Text(
-          'AVAILABLE RQUESTS',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          Row(
-            children: [
-              Icon(Icons.battery_full, color: Colors.black),
-              SizedBox(width: 5),
-              Text('68%', style: TextStyle(color: Colors.black)),
-              SizedBox(width: 10),
-            ],
-          ),
-        ],
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(16),
-        children: List.generate(4, (index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/details');
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: RequestCard(user: 'USER ${index + 1}'),
-            ),
-          );
-        }),
-      ),
-    );
-  }
+function HomeScreen() {
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <header style={styles.appBar}>
+        <button style={styles.iconButton} onClick={() => {}}>
+          <span role="img" aria-label="notifications">🔔</span>
+        </button>
+        <h1 style={styles.title}>AVAILABLE REQUESTS</h1>
+        <div style={styles.statusRow}>
+          <span role="img" aria-label="battery">🔋</span>
+          <span style={{ marginLeft: 5 }}>68%</span>
+        </div>
+      </header>
+      <div style={styles.listContainer}>
+        {[...Array(4)].map((_, index) => (
+          <div key={index} style={{ marginBottom: 16 }} onClick={() => navigate('/details')}>
+            <RequestCard user={`USER ${index + 1}`} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-// ---------------- DetailsScreen ----------------
-class DetailsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Request Details'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Center(
-        child: Text(
-          'Details about the selected request.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
+function DetailsScreen() {
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <header style={styles.appBar}>
+        <button onClick={() => navigate(-1)} style={styles.iconButton}>⬅️</button>
+        <h1>Request Details</h1>
+      </header>
+      <main style={{ padding: 20 }}>
+        <p style={{ fontSize: 18 }}>Details about the selected request.</p>
+      </main>
+    </div>
+  );
 }
 
-// ---------------- RequestCard Widget ----------------
-class RequestCard extends StatelessWidget {
-  final String user;
-
-  RequestCard({required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(12),
-      color: Colors.grey[300],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.person),
-              SizedBox(width: 8),
-              Text(user),
-            ],
-          ),
-          SizedBox(height: 4),
-          Text('RATINGS'),
-          Row(
-            children: List.generate(5, (index) => Icon(Icons.star_border)),
-          ),
-        ],
-      ),
-    );
-  }
+function RequestCard({ user }) {
+  return (
+    <div style={styles.card}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <span role="img" aria-label="person">👤</span>
+        <span style={{ marginLeft: 8 }}>{user}</span>
+      </div>
+      <div>RATINGS</div>
+      <div>{[...Array(5)].map((_, i) => <span key={i}>☆</span>)}</div>
+    </div>
+  );
 }
+
+const styles = {
+  appBar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    padding: '10px 16px',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+  },
+  iconButton: {
+    background: 'none',
+    border: 'none',
+    fontSize: 18
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    margin: 0
+  },
+  statusRow: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  listContainer: {
+    padding: 16
+  },
+  card: {
+    padding: 12,
+    backgroundColor: '#e0e0e0'
+  }
+};
+
+export default App;
