@@ -18,3 +18,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+//Hi guys this is Ruusa......
