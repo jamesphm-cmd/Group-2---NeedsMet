@@ -1,95 +1,31 @@
-from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.scrollview import ScrollView
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopper App</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <!-- Main Screen -->
+    <div id="main-screen" class="screen">
+        <button id="post-request-btn" class="red-btn">POST YOUR REQUEST</button>
+        <button id="see-requests-btn" class="black-btn">SEE REQUESTS</button>
+    </div>
 
-class MainScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
-        
-        # Red button to post request
-        post_btn = Button(
-            text='POST YOUR REQUEST',
-            background_color=(1, 0, 0, 1),  # Red color
-            size_hint=(1, 0.2)
-        )
-        post_btn.bind(on_press=self.post_request)
-        
-        # Black button to see requests
-        see_btn = Button(
-            text='SEE REQUESTS',
-            background_color=(0, 0, 0, 1),  # Black color
-            color=(1, 1, 1, 1),  # White text
-            size_hint=(1, 0.2)
-        )
-        see_btn.bind(on_press=self.see_requests)
-        
-        layout.add_widget(post_btn)
-        layout.add_widget(see_btn)
-        self.add_widget(layout)
+    <!-- Shoppers Screen -->
+    <div id="shoppers-screen" class="screen hidden">
+        <h2>AVAILABLE SHOPPERS</h2>
+        <div id="shoppers-list"></div>
+    </div>
 
-    def post_request(self, instance):
-        # Navigate to shoppers screen and update it
-        app = App.get_running_app()
-        shoppers_screen = app.root.get_screen('shoppers')
-        shoppers_screen.update_shoppers()
-        app.root.current = 'shoppers'
+    <!-- Requests Screen -->
+    <div id="requests-screen" class="screen hidden">
+        <h2>AVAILABLE REQUESTS</h2>
+        <div id="requests-list"></div>
+    </div>
 
-    def see_requests(self, instance):
-        # Navigate to requests screen
-        App.get_running_app().root.current = 'requests'
-
-class ShoppersScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
-        self.scroll = ScrollView()
-        self.shoppers_list = BoxLayout(orientation='vertical', size_hint_y=None)
-        self.shoppers_list.bind(minimum_height=self.shoppers_list.setter('height'))
-        self.scroll.add_widget(self.shoppers_list)
-        self.layout.add_widget(Label(text='AVAILABLE SHOPPERS', size_hint=(1, 0.1)))
-        self.layout.add_widget(self.scroll)
-        self.add_widget(self.layout)
-
-    def update_shoppers(self):
-        # Clear previous entries
-        self.shoppers_list.clear_widgets()
-        # Add sample shoppers (in a real app, this would be dynamic)
-        for user in ['USER1', 'USER2', 'USER3', 'USER4']:
-            user_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40)
-            user_layout.add_widget(Label(text=f'{user} RATINGS'))
-            user_layout.add_widget(Label(text='⭐⭐⭐⭐⭐'))
-            self.shoppers_list.add_widget(user_layout)
-
-class RequestsScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
-        scroll = ScrollView()
-        requests_list = BoxLayout(orientation='vertical', size_hint_y=None)
-        requests_list.bind(minimum_height=requests_list.setter('height'))
-        scroll.add_widget(requests_list)
-        layout.add_widget(Label(text='AVAILABLE REQUESTS', size_hint=(1, 0.1)))
-        layout.add_widget(scroll)
-        self.add_widget(layout)
-
-        # Add sample requests (in a real app, this would be dynamic)
-        for user in ['USER1', 'USER2', 'USER3', 'USER4']:
-            user_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40)
-            user_layout.add_widget(Label(text=f'{user} RATINGS'))
-            user_layout.add_widget(Label(text='⭐⭐⭐⭐⭐'))
-            requests_list.add_widget(user_layout)
-
-class ShopperApp(App):
-    def build(self):
-        sm = ScreenManager()
-        sm.add_widget(MainScreen(name='main'))
-        sm.add_widget(ShoppersScreen(name='shoppers'))
-        sm.add_widget(RequestsScreen(name='requests'))
-        return sm
-
-if __name__ == '__main__':
-    ShopperApp().run()
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
