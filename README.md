@@ -5,9 +5,9 @@ This is the main repository for our app
 |-------------------------------|------------------------------|
 | Akwenye FN and Shapange EN    | User ID and Password screen  |
 | Shivute NE and Samba AM       | Name details screen          |
-| Kasheeta NM and Nakasole U I  | Login/sign up screen         |
+| Kasheeta NM and Nakasole UI  | Login/sign up screen         |
 | Tjondo UJH and Hamukoto KM    | Post your request screen     |
-| Tjonga JE and BAAM,G          | Available shoppers 1st screen|
+| Ilonga JE and BAAM,G          | Available shoppers 1st screen|
 | Awala RS and Shikongo II      | Available shoppers 2nd screen|
 | Shileka AA                    | Create 5 digit pin screen    |
 | Amadhila IW                   | Post your request screen     |
