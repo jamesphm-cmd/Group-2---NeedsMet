@@ -1,7 +1,7 @@
 # NeedsMet App
 This is the main repository for our app
 
-NAME(S)                            ASSIGNED SCREEN
+NAMEs                              ASSIGNED SCREEN
 
 1.Akwenye F.N / Shapange E N       User ID and Password screen
 2.Shivute N E /Samba A M           Name details screen
