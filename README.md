@@ -3,7 +3,7 @@ This is the main repository for our app
 | NAMES                        | ASSIGNED SCREEN              |
 |-----------------------------|------------------------------|
 | Akwenye FN / Shapange EN    | User ID and Password screen  |
-| Shivute NE / Samba AM       | Name details screen          |
+| Shivute NE / Samba AM       | Name,details screen          |
 | Kasheeta NM / Nakasole U I  | Login/sign up screen         |
 | Tjondo UJH / Hamukoto KM    | Post your request screen     |
 | Tjonga JE / BAAM,G          | Available shoppers 1st screen|
