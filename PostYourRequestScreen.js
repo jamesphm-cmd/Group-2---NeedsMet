@@ -128,9 +128,9 @@
             navDiv.className = 'container mx-auto flex justify-around items-center';
 
             // Helper function to create nav links
-            function createNavLink(iconPath, text, clickHandler) {
+            function createNavLink(iconPath, text, url) {
                 const link = document.createElement('a');
-                link.href = '#'; // Or a specific page
+                link.href = url; // Set the URL for navigation
                 link.className = 'text-gray-700 hover:text-gray-900 flex flex-col items-center';
                 link.innerHTML = `
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -138,17 +138,14 @@
                     </svg>
                     <span class="text-xs mt-1 hidden sm:block">${text}</span>
                 `;
-                link.onclick = (e) => {
-                    e.preventDefault(); // Prevent default link behavior
-                    if (clickHandler) clickHandler();
-                };
                 return link;
             }
 
-            navDiv.appendChild(createNavLink('M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 001 1h3m-6-10v10a1 1 0 001 1h3', 'Home', () => showMessageBox('You clicked Home!')));
-            navDiv.appendChild(createNavLink('M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', 'Profile', () => showMessageBox('You clicked Profile!')));
-            navDiv.appendChild(createNavLink('M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', 'Alerts', () => showMessageBox('You clicked Alerts!')));
-            navDiv.appendChild(createNavLink('M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z', 'Chat', () => showMessageBox('You clicked Chat!')));
+            // Append navigation links to the nav bar
+            navDiv.appendChild(createNavLink('M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 001 1h3m-6-10v10a1 1 0 001 1h3', 'Home', 'home.html'));
+            navDiv.appendChild(createNavLink('M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', 'Profile', 'profile.html'));
+            navDiv.appendChild(createNavLink('M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', 'Alerts', 'alerts.html'));
+            navDiv.appendChild(createNavLink('M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z', 'Chat', 'chat.html'));
 
             nav.appendChild(navDiv);
             appRoot.appendChild(nav);
@@ -163,14 +160,20 @@
             const postRequestButton = document.createElement('button');
             postRequestButton.className = 'w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-4 px-6 rounded-lg shadow-md transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75';
             postRequestButton.textContent = 'POST YOUR REQUEST';
-            postRequestButton.onclick = () => showMessageBox('You clicked POST YOUR REQUEST! This would navigate to the request posting page.');
+            // Set the onclick handler to navigate to 'post-request.html'
+            postRequestButton.onclick = () => {
+                window.location.href = 'post-request.html';
+            };
             mainDiv.appendChild(postRequestButton);
 
             // SEE REQUESTS Button
             const seeRequestsButton = document.createElement('button');
             seeRequestsButton.className = 'w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-4 px-6 rounded-lg shadow-md transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-75';
             seeRequestsButton.textContent = 'SEE REQUESTS';
-            seeRequestsButton.onclick = () => showMessageBox('You clicked SEE REQUESTS! This would navigate to the requests listing page.');
+            // Set the onclick handler to navigate to 'see-requests.html'
+            seeRequestsButton.onclick = () => {
+                window.location.href = 'see-requests.html';
+            };
             mainDiv.appendChild(seeRequestsButton);
 
             main.appendChild(mainDiv);
@@ -182,3 +185,56 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
