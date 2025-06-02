@@ -1,38 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Platform, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { ArrowLeft } from 'lucide-react'; // Import the back arrow icon
+import { ArrowLeft } from 'lucide-react'; 
 
 const CreatePinScreen = () => {
   const [pin, setPin] = useState('');
   const [isTextVisible, setIsTextVisible] = useState(true);
   const inputRef = useRef(null);
 
-    // Function to handle the press event on the text.
+    
   const handleTextPress = () => {
-    setIsTextVisible(false); // Hide the text
+    setIsTextVisible(false); 
         if (inputRef.current) {
-          inputRef.current.focus(); // Focus on the TextInput
+          inputRef.current.focus(); 
         }
   };
 
-    // Function to handle PIN input changes
+    
     const handlePinChange = (value) => {
-        // Allow only numeric input and limit to 5 digits
+        
         const numericValue = value.replace(/[^0-9]/g, '');
         if (numericValue.length <= 5) {
             setPin(numericValue);
         }
     };
 
-    // Function to handle continue button press
+    
     const handleContinue = () => {
-        // Basic validation: Check if the PIN is 5 digits long
+        
         if (pin.length === 5) {
-            // In a real app, you would save the PIN securely here (e.g., using react-native-sensitive-info)
+            
             console.log('PIN entered:', pin);
-            alert(`PIN set to: ${pin}.  In a real app, you would now proceed to the next screen.`); //Replace with navigation
-            // You would also navigate to the next screen here
+            alert(`PIN set to: ${pin}.  In a real app, you would now proceed to the next screen.`); 
+            
         } else {
             Alert.alert(
                 "Error",
@@ -57,8 +57,8 @@ const CreatePinScreen = () => {
       <View style={styles.contentContainer}>
         <TouchableOpacity
           style={styles.textContainer}
-          onPress={handleTextPress} // Attach the press handler
-          activeOpacity={1} // Prevent opacity change on press
+          onPress={handleTextPress} 
+          activeOpacity={1} 
         >
             {isTextVisible ? (
                 <Text style={styles.createText}>Create a 5-digit PIN</Text>
@@ -70,9 +70,9 @@ const CreatePinScreen = () => {
                     value={pin}
                     onChangeText={handlePinChange}
                     maxLength={5}
-                    placeholder="" // You can set a placeholder if needed
-                    placeholderTextColor="#888" // Placeholder color
-                    selectionColor="#000" // Android cursor color
+                    placeholder="" 
+                    placeholderTextColor="#888" 
+                    selectionColor="#000" 
                     cursorColor="#000"
                 />
             )}
@@ -90,7 +90,7 @@ const CreatePinScreen = () => {
         <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
-                // In a real app, you'd use navigation.goBack();
+                
                 alert('Back button pressed.  In a real app, you would navigate to the previous screen.');
             }}
         >
@@ -138,14 +138,14 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   continueButton: {
-    backgroundColor: '#E53935', // Red button color
+    backgroundColor: '#E53935', 
     paddingVertical: 15,
     borderRadius: 10,
     width: '100%',
     alignItems: 'center',
   },
   continueButtonText: {
-    color: '#FFFFFF', // White text color
+    color: '#FFFFFF', 
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         left: 20,
         padding: 10,
         borderRadius: 25,
-        backgroundColor: '#E53935', // Match the continue button color
+        backgroundColor: '#E53935', 
     },
 });
 
