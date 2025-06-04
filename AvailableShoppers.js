@@ -1,17 +1,17 @@
 const STAR_COUNT = 5;
 const users = ["User 1", "User 2", "User 3", "User 4"];
-const ratings = new Array(users.length).fill(0); // Tracks rating for each user (0-based index)
+const ratings = new Array(users.length).fill(0);
 
 // Function to update star ratings for a user
 function updateStars(userIndex, starIndex) {
-    ratings[userIndex] = starIndex + 1; // Store rating (1 to 5)
+    ratings[userIndex] = starIndex + 1;
     const starStates = new Array(STAR_COUNT).fill(false).map((_, index) => index <= starIndex);
     return {
         user: users[userIndex],
         rating: ratings[userIndex],
         stars: starStates.map(isFilled => ({
             symbol: isFilled ? '★' : '☆',
-            color: isFilled ? '#FFD700' : '#000000' // Gold for filled, black for empty
+            color: isFilled ? '#FFD700' : '#000000'
         }))
     };
 }
@@ -21,7 +21,7 @@ function handleStarClick(userIndex, starIndex) {
     return updateStars(userIndex, starIndex);
 }
 
-// Function to handle star hover (optional)
+// Function to handle star hover
 function handleStarHover(userIndex, starIndex, isEntering) {
     return {
         user: users[userIndex],
@@ -44,11 +44,9 @@ function getUserState(userIndex) {
     };
 }
 
-// Export functions and data for use in an app framework
-module.exports = {
-    users,
-    STAR_COUNT,
-    handleStarClick,
-    handleStarHover,
-    getUserState
-};
+// Export for CommonJS
+exports.users = users;
+exports.STAR_COUNT = STAR_COUNT;
+exports.handleStarClick = handleStarClick;
+exports.handleStarHover = handleStarHover;
+exports.getUserState = getUserState;
