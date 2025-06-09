@@ -238,22 +238,7 @@
                 });
             }
 
-            // Menu icon (currently a placeholder, can be expanded for a side menu)
-            const menuBtn = document.getElementById('menu-btn');
-            if (menuBtn) {
-                menuBtn.addEventListener('click', () => {
-                    // For now, let's just log a message or go to home screen for simplicity
-                    console.log('Menu button clicked!');
-                    // showScreen('home-screen'); // Or implement a side menu toggle
-                });
-            }
-
-            // Set the initial screen to 'home-screen' when the page loads
-            showScreen('home-screen');
-        });
-    </script>
-</body>
-</html>
+            
 
 
 
