@@ -1,0 +1,172 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
+import { database } from './Firebase';
+import { ref, onValue, get } from 'firebase/database';
+import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const ShoppersRatingScreen = () => {
+  const [ratings, setRatings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const ratingsRef = ref(database, 'ratings');
+    const unsubscribe = onValue(ratingsRef, async (snapshot) => {
+      const ratingsData = [];
+      const promises = [];
+
+      snapshot.forEach((child) => {
+        const rating = {
+          id: child.key,
+          ...child.val()
+        };
+        ratingsData.push(rating);
+        const userRef = ref(database, users/${rating.shopperId});
+        const userPromise = get(userRef).then((snap) => {
+          if (snap.exists()) {
+            rating.shopperProfile = snap.val();
+          }
+        });
+        promises.push(userPromise);
+      });
+
+      await Promise.all(promises);
+      setRatings(ratingsData);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const getColorFromId = (id) => {
+    const colors = ['#E57373', '#81C784', '#64B5F6', '#FFD54F', '#BA68C8'];
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      hash = id.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colors[Math.abs(hash) % colors.length];
+  };
+
+  const renderRatingItem = ({ item }) => {
+    const shopper = item.shopperProfile || {};
+    let initials = '';
+
+    if (shopper.name && shopper.surname) {
+      initials = ${shopper.name[0]}${shopper.surname[0]};
+    } else if (item.shopperId) {
+      initials = item.shopperId.slice(0, 2);
+    }
+
+    const avatarText = initials.toUpperCase();
+    const avatarColor = getColorFromId(item.shopperId);
+
+    return (
+      <View style={styles.ratingCard}>
+        <View style={styles.row}>
+          {shopper.profileImage ? (
+            <Image
+              source={{ uri: shopper.profileImage }}
+              style={styles.avatarImage}
+            />
+          ) : (
+            <View style={[styles.avatarCircle, { backgroundColor: avatarColor }]}>
+              <Text style={styles.avatarText}>{avatarText}</Text>
+            </View>
+          )}
+          <Text style={styles.shopperId}>{item.shopperId}</Text>
+        </View>
+
+        <View style={styles.starsRow}>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Text key={index} style={styles.star}>
+              {index < item.rating ? '⭐' : '☆'}
+            </Text>
+          ))}
+        </View>
+        {item.comment && (
+          <Text style={styles.comment}>"{item.comment}"</Text>
+        )}
+      </View>
+    );
+  };
+
+  if (loading) return <ActivityIndicator size="large" />;
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
+        <Ionicons name="chevron-back" size={28} color="#000" />
+      </TouchableOpacity>
+
+      <Text style={styles.title}>
+        {ratings.length > 0 ? 'Rated Shoppers' : 'No Ratings Yet'}
+      </Text>
+
+      {ratings.length > 0 ? (
+        <FlatList
+          data={ratings}
+          renderItem={renderRatingItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContainer}
+        />
+      ) : (
+        <Text style={styles.emptyText}>No one has been rated yet</Text>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20 },
+  backButton: { marginBottom: 10 },
+  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20 },
+  ratingCard: {
+    backgroundColor: '#f8f8f8',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5
+  },
+  avatarCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10
+  },
+  avatarText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  avatarImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10
+  },
+  shopperId: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  starsRow: {
+    flexDirection: 'row',
+    marginVertical: 5
+  },
+  star: {
+    fontSize: 20,
+    marginRight: 2,
+    color: '#FFD700'
+  },
+  comment: { fontStyle: 'italic', marginTop: 5 },
+  emptyText: { textAlign: 'center', color: '#888' },
+  listContainer: { paddingBottom: 20 }
+});
+
+export default ShoppersRatingScreen;
