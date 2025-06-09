@@ -42,7 +42,6 @@ export default MyComponent;
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
   image: { width: 300, height: 200, marginBottom: 20 },
