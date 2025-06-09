@@ -31,35 +31,7 @@ const RequestScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 30,
-  },
-  label: {
-    fontSize: 14,
-    marginBottom: 8,
-    marginTop: 20,
-    color: '#444',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#f1edf2',
-    padding: 12,
-    borderRadius: 6,
-    fontSize: 16,
-  },
-});
 
-export default RequestScreen;
 
 
 
