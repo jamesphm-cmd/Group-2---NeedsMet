@@ -158,24 +158,4 @@ const styles = StyleSheet.create({
   googleIcon: {
     marginRight: 10,
   },
-  googleButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  footerText: {
-    color: '#777',
-  },
-  footerLink: {
-    color: '#6a51ae',
-    fontWeight: 'bold',
-    marginLeft: 5,
-  },
-});
-
-export default LoginScreen;
+  
